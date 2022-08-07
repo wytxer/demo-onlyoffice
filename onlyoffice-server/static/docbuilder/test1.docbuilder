@@ -1,0 +1,65 @@
+builder.CreateFile("docx")
+var oDocument = Api.GetDocument()
+
+// 添加标题
+var oParagraph = oDocument.GetElement(0)
+oParagraph.AddText("标题")
+oParagraph.SetJc("center")
+oParagraph.SetFontSize(40)
+oParagraph.SetFontFamily("Arial")
+
+// 添加正文
+oParagraph = Api.CreateParagraph()
+oParagraph.AddText("\n\n正文内容。\n正文内容。\n正文内容。\n\n\n此致\n")
+oParagraph.SetSpacingLine(400, "auto")
+oParagraph.SetFontSize(28)
+oParagraph.SetFontFamily("Arial")
+oDocument.Push(oParagraph)
+
+// 添加变量
+var inlineContent = Api.CreateInlineLvlSdt()
+inlineContent.SetTag("var-customName")
+content = Api.CreateRun()
+content.AddText("自定义变量名称")
+content.SetFontSize(28)
+content.SetFontFamily("Arial")
+content.SetHighlight(255, 255, 0)
+inlineContent.AddElement(content, 0)
+oParagraph.AddInlineLvlSdt(inlineContent)
+
+// 添加落款
+oParagraph = Api.CreateParagraph()
+oParagraph.AddText("落款：")
+oParagraph.SetSpacingLine(400, "auto")
+oParagraph.SetJc("right")
+oParagraph.SetFontSize(28)
+oParagraph.SetFontFamily("Arial")
+
+// 添加落款名称
+inlineContent = Api.CreateInlineLvlSdt()
+inlineContent.SetTag("var-signName")
+content = Api.CreateRun()
+content.AddText("落款名称")
+content.SetFontSize(28)
+content.SetFontFamily("Arial")
+content.SetHighlight(255, 255, 0)
+inlineContent.AddElement(content, 0)
+oParagraph.AddInlineLvlSdt(inlineContent)
+oDocument.Push(oParagraph)
+
+// 添加日期
+oParagraph = Api.CreateParagraph()
+oParagraph.SetSpacingLine(400, "auto")
+oParagraph.SetJc("right")
+inlineContent = Api.CreateInlineLvlSdt()
+inlineContent.SetTag("var-updatedTime")
+content = Api.CreateRun()
+content.AddText("当前日期")
+content.SetFontSize(28)
+content.SetFontFamily("Arial")
+content.SetHighlight(255, 255, 0)
+inlineContent.AddElement(content, 0)
+oParagraph.AddInlineLvlSdt(inlineContent)
+oDocument.Push(oParagraph)
+builder.SaveFile("docx", "test1.docx")
+builder.CloseFile()

@@ -1,0 +1,28 @@
+{
+  "name": "Hello",
+  "guid": "asc.{11700c35-1fdb-4e37-9edb-b31637139601}",
+  "variations": [
+    {
+      "description": "Hello Word",
+      "url": "index.html",
+      "icons": [
+        "icon.png",
+        "icon@2x.png"
+      ],
+      "isViewer": false,
+      "EditorsSupport": [
+        "word"
+      ],
+      "isVisual": true,
+      "isModal": false,
+      "isInsideMode": true,
+      "initDataType": "none",
+      "initData": "",
+      "isUpdateOleOnResize": false,
+      "buttons": [],
+      "events" : [
+        "onClick"
+      ]
+    }
+  ]
+}
