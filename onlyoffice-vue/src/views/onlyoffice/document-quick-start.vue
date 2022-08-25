@@ -9,7 +9,7 @@ const editorConfig = {
   width: 1200,
   // 编辑器高度
   height: 800,
-  // 要打开的文档类型，支持 word（文档）、cell（表格）、slide（PPT）
+  // 编辑器类型，支持 word（文档）、cell（表格）、slide（PPT）
   documentType: 'word',
   // 文档配置
   document: {
@@ -27,7 +27,6 @@ const editorConfig = {
 export default {
   data () {
     return {
-      editorConfig,
       id: `editor-${new Date().getTime().toString('32')}`
     }
   },
@@ -36,13 +35,16 @@ export default {
   },
   beforeDestroy () {
     // 组件销毁前销毁编辑器
-    if (this.editor) this.editor.destroyEditor()
+    if (this.editor) {
+      this.editor.destroyEditor()
+      this.editor = null
+    }
   },
   methods: {
     // 初始化编辑器
     initEditor () {
       const scriptId = `script-${this.id}`
-      const added = !!document.querySelector(scriptId)
+      const added = document.querySelector(`#${scriptId}`)
       if (!added) {
         const script = document.createElement('script')
         script.id = scriptId
@@ -50,17 +52,16 @@ export default {
         script.onload = this.createEditor
         document.head.appendChild(script)
       } else {
-        this.refresh()
+        this.createEditor()
       }
     },
     // 创建编辑器
     createEditor () {
-      this.editor = new window.DocsAPI.DocEditor(this.id, this.editorConfig)
-    },
-    // 重载编辑器
-    refresh () {
-      if (this.editor) this.editor.destroyEditor()
-      this.createEditor()
+      if (this.editor) {
+        this.editor.destroyEditor()
+        this.editor = null
+      }
+      this.editor = new window.DocsAPI.DocEditor(this.id, editorConfig)
     }
   }
 }

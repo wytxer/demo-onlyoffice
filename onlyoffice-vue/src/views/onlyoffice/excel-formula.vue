@@ -15,8 +15,7 @@ export default {
     return {
       loading: {
         editor: false,
-        save: false,
-        forceSave: false
+        save: false
       },
       detail: {},
       editorConfig: {}
@@ -45,7 +44,7 @@ export default {
     },
     // 保存
     onSave () {
-      this.loading.forceSave = true
+      this.loading.save = true
       const { key } = this.editorConfig.document
       const { id } = this.detail
       forceSaveDocumentInfo({ key, id })
@@ -57,7 +56,7 @@ export default {
           }
         })
         .finally(() => {
-          this.loading.forceSave = false
+          this.loading.save = false
         })
     }
   }

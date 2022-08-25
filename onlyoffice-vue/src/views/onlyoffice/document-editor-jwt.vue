@@ -48,7 +48,8 @@ export default {
       this.loading.forceSave = true
       const { key } = this.editorConfig.document
       const { id } = this.detail
-      forceSaveDocumentInfo({ key, id })
+      // 如果开启了 JWT 加密，useJwtEncrypt 字段要传递 y
+      forceSaveDocumentInfo({ id, key, useJwtEncrypt: 'n' })
         .then(res => {
           if (res.code === 0) {
             this.$message.success('保存成功')
