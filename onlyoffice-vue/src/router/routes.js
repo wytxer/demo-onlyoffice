@@ -54,6 +54,12 @@ const routes = [{
       meta: {
         title: '文档转换'
       }
+    }, {
+      path: 'onlyoffice-vue',
+      component: () => import(/* webpackChunkName: "onlyoffice-vue" */ '@/views/onlyoffice/onlyoffice-vue.vue'),
+      meta: {
+        title: '使用 onlyoffice-vue 组件'
+      }
     }]
   }, {
     path: 'excel',
