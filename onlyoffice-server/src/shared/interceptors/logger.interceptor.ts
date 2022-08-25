@@ -1,8 +1,6 @@
 import {
   CallHandler,
   ExecutionContext,
-  HttpException,
-  HttpStatus,
   Injectable,
   Logger,
   NestInterceptor,
@@ -28,7 +26,6 @@ export class LoggingInterceptor implements NestInterceptor {
     return next.handle().pipe(
       tap({
         next: (data: unknown): void => this.logResponse(data, context),
-        // error: (error: Error): void => this.logError(error, context),
       }),
     );
   }
@@ -43,26 +40,5 @@ export class LoggingInterceptor implements NestInterceptor {
         request.url
       }} ${JSON.stringify(data)}`,
     );
-  }
-
-  // 输出错误日志
-  private logError(error: Error, context: ExecutionContext): void {
-    const request: Request = context.switchToHttp().getRequest<Request>();
-    const { method, url, body } = request;
-    const upperMethod = method.toUpperCase();
-
-    if (error instanceof HttpException) {
-      const statusCode: number = error.getStatus();
-      const message = `Response {${statusCode}, ${upperMethod}, ${url}} ${JSON.stringify(
-        body,
-      )} ${error.stack}`;
-      if (statusCode >= HttpStatus.INTERNAL_SERVER_ERROR) {
-        this.logger.error(message);
-      } else {
-        this.logger.warn(message);
-      }
-    } else {
-      this.logger.error(`Response {${upperMethod}, ${url}} ${error.stack}`);
-    }
   }
 }
