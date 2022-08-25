@@ -7,6 +7,13 @@ enum ErrorCode {
   ErrorCommand = 5,
   InvalidToken = 6,
 }
-export interface OnlyofficeCommand {
+export interface IOnlyofficeCommand {
   error: ErrorCode;
+}
+
+export interface IOnlyofficeForceSave {
+  c?: string;
+  key?: string;
+  userdata?: string;
+  token?: string;
 }

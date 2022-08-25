@@ -18,8 +18,6 @@ export class DocumentController {
       '通过调用 Onlyoffice 提供的指令接口间接保存文件，最终文件的报错操作还是在 editorConfig.callbackUrl 所指定的接口里面完成的',
   })
   async forceSave(@Body() body: DocumentForceSaveDto): Promise<any> {
-    // 将业务参数传给 Onlyoffice 服务，当回调里面存在多个请求时，标识符将有助于区分特定请求
-    body.userdata = body.id;
     return await this.documentService.forceSave(body);
   }
 

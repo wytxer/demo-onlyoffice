@@ -14,7 +14,10 @@ import {
   OnlyofficeForceSave,
   OnlyofficeEditorConfig,
 } from './onlyoffice.entity';
-import { OnlyofficeCommand } from './onlyoffice.interface';
+import {
+  IOnlyofficeCommand,
+  IOnlyofficeForceSave,
+} from './onlyoffice.interface';
 
 @Injectable()
 export class OnlyofficeService {
@@ -31,14 +34,14 @@ export class OnlyofficeService {
     // 正在编辑文档但保存了当前文档状态
     if (status === 6) {
       try {
-        // 根据地址下载 docx 文件
-        const docx: AxiosResponse = await this.request.axiosRef.get(url, {
+        // 根据地址下载文档文件
+        const file: AxiosResponse = await this.request.axiosRef.get(url, {
           responseType: 'stream',
         });
         const stream: WriteStream = createWriteStream(
           join(this.config.get('staticPath'), body.key),
         );
-        docx.data.pipe(stream);
+        file.data.pipe(stream);
       } catch (error) {
         this.logger.error(error);
         // 返回 Onlyoffice 服务认识的报错
@@ -54,11 +57,22 @@ export class OnlyofficeService {
 
   // 强制保存文档
   async forceSave(body: OnlyofficeForceSaveDto): Promise<OnlyofficeForceSave> {
-    const saveState: OnlyofficeCommand = await this.request.axiosRef
-      .post(this.config.get('onlyoffice.commandUrl'), {
-        c: 'forcesave',
-        ...body,
-      })
+    const { key, userdata, useJwtEncrypt } = body;
+    let newBody: IOnlyofficeForceSave = {
+      c: 'forcesave',
+      key,
+      userdata,
+    };
+    // 如果是使用了 JWT 加密，重新组装请求参数
+    if (useJwtEncrypt === 'y') {
+      newBody = {
+        token: this.jwt.sign(newBody, {
+          secret: this.config.get('onlyoffice.secret'),
+        }),
+      };
+    }
+    const saveState: IOnlyofficeCommand = await this.request.axiosRef
+      .post(this.config.get('onlyoffice.commandUrl'), newBody)
       .then((res) => res.data);
 
     // 组装返回值

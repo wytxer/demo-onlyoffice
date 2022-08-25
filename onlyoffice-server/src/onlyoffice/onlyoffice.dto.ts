@@ -141,6 +141,12 @@ export class OnlyofficeCallbackDto {
    */
   @IsString()
   lastsave?: string = null;
+
+  /**
+   * 加密令牌
+   */
+  @IsString()
+  token?: string = null;
 }
 
 /**
@@ -158,4 +164,11 @@ export class OnlyofficeForceSaveDto {
    */
   @IsString()
   userdata?: string = null;
+
+  /**
+   * 使用 JWT 加密文档参数，默认不加密，需要配合 Onlyoffice 的 secret 配置使用。
+   */
+  @IsString()
+  @IsIn(['y', 'n'])
+  useJwtEncrypt?: string = 'n';
 }
