@@ -23,6 +23,7 @@ specifiers:
   less-loader: ^4.1.0
   lint-staged: ^9.5.0
   lodash.merge: ^4.6.2
+  onlyoffice-vue: ^1.0.1
   vue: ^2.6.14
   vue-router: ^3.5.3
   vue-template-compiler: ^2.6.14
@@ -34,6 +35,7 @@ dependencies:
   axios: 0.27.2
   core-js: 3.24.1
   lodash.merge: 4.6.2
+  onlyoffice-vue: 1.0.1
   vue: 2.7.8
   vue-router: 3.5.4
   vuex: 3.6.2_vue@2.7.8
@@ -7642,6 +7644,11 @@ packages:
     dependencies:
       mimic-fn: 2.1.0
     dev: true
+
+  /onlyoffice-vue/1.0.1:
+    resolution: {integrity: sha512-90L/oxfhVtUgTRHUCQmrb6Ye5sp/GsEEqAl8AWZeeS+IIe68yZrwAzcVhgOe+RtfRb37c2gp+wrs5HHbWxx1CQ==}
+    engines: {node: '>=10'}
+    dev: false
 
   /open/6.4.0:
     resolution: {integrity: sha512-IFenVPgF70fSm1keSd2iDBIDIBZkroLeuffXq+wKTzTJlBpesFWojV9lb8mzOfaAzM1sr7HQHuO0vtV0zYekGg==}
