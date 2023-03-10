@@ -26,6 +26,11 @@ pnpm run dev
 - [使用文档](https://blog.bszhct.com/2022/08/15/onlyoffice-quick-start/)
 
 
+## onlyoffice 填坑交流群
+
+![onlyoffice 填坑交流群](./qrcode.jpg)
+
+
 ## License
 
 [MIT](/LICENSE)
